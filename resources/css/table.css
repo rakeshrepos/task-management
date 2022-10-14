@@ -1,0 +1,14 @@
+td{
+    padding: 10px 5px;
+}
+table{
+   table-layout: fixed;
+   width: 100%;
+   word-break: break-word;
+}
+tr{
+    padding: 20px;
+}
+tr:nth-child(even){
+    background-color: #eef2ff;
+}
