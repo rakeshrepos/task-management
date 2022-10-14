@@ -19,8 +19,8 @@
 <body>
     <div id="app">
         <div class="flex">
-            <aside id="sidebar" class="w-64 fixed hidden lg:block">
-                
+            @auth
+            <aside id="sidebar" class="w-64 fixed hidden lg:block"> 
                 <div class="overflow-y-auto h-screen py-4 px-3 bg-gray-100 rounded dark:bg-gray-800">
                     <div class="flex w-full justify-end lg:hidden">
                         <button onclick="slideOut()" type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -65,11 +65,12 @@
                     </ul>
                 </div>
             </aside>
+            @endauth
             <div class="w-full lg:ml-64">
                 <header class="text-gray-600 body-font w-full">
                     <div class="flex justify-between p-5">
                         <div class="flex items-center">
-                            <button onclick="slideIn()" id="menu">
+                            <button onclick="slideIn()" class="lg:hidden" id="menu">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
                                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                                 </svg>

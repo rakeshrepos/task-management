@@ -16,4 +16,8 @@ class ClientController extends Controller
     public function create(){
         return view('createClient');
     }
+
+    public function show(){
+        return view('showClient');
+    }
 }

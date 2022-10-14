@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('home');
 
 Route::get('/client/create', [App\Http\Controllers\ClientController::class, 'create'])->name('client.create');
+Route::get('/client/{id}',[App\Http\Controllers\ClientController::class, 'show'])->name('client.show')->withoutMiddleware(['auth']);
 
 Route::get('/task/create', [App\Http\Controllers\TaskController::class, 'create'])->name('task.create');
 
