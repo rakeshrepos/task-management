@@ -1,1 +1,3 @@
-function    
+function toggle(){
+    console.log('asdf')
+}

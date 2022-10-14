@@ -19,8 +19,18 @@
 <body>
     <div id="app">
         <div class="flex">
-            <aside class="w-64 fixed hidden lg:block">
+            <aside id="sidebar" class="w-64 fixed hidden lg:block">
+                
                 <div class="overflow-y-auto h-screen py-4 px-3 bg-gray-100 rounded dark:bg-gray-800">
+                    <div class="flex w-full justify-end lg:hidden">
+                        <button onclick="slideOut()" type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                            <span class="sr-only">Close menu</span>
+                            <!-- Heroicon name: outline/x -->
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                     <ul class="space-y-2">
                         <li>
                             <a href="/admin" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -59,7 +69,7 @@
                 <header class="text-gray-600 body-font w-full">
                     <div class="flex justify-between p-5">
                         <div class="flex items-center">
-                            <button id="menu">
+                            <button onclick="slideIn()" id="menu">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
                                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                                 </svg>
@@ -85,3 +95,14 @@
     </div>
 </body>
 </html>
+<script>
+    
+    function slideIn(){
+        const sidebar = document.getElementById('sidebar')
+        sidebar.classList.remove('hidden')
+    }
+    function slideOut(){
+        const sidebar = document.getElementById('sidebar')
+        sidebar.classList.add('hidden')
+    }
+</script>
