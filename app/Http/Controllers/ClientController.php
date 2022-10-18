@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Client;
+use App\Models\Status;
+use App\Models\Task;
 
 class ClientController extends Controller
 {
@@ -52,7 +54,15 @@ class ClientController extends Controller
         return redirect('/admin');
     }
 
-    public function show(){
-        return view('showClient');
+    public function show($id){
+        $client = Client::FindOrFail($id)->first();
+        $status = Status::where('client_code','=',$client->client_code)->get();
+        $task = Task::where('client_code','=',$client->client_code)->get();
+        // dd($status,$task);
+        return view('showClient',[
+            'client' => $client,
+            'status' => $status,
+            'task' => $task
+        ]);
     }
 }
