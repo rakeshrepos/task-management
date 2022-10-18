@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('client_id');
+            $table->string('client_code');
             $table->timestamps();
         });
     }

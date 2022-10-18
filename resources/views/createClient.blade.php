@@ -2,247 +2,329 @@
 <div>
     <div class="max-w-2xl mx-auto bg-white p-16">
         <p class="mb-3 text-xl font-bold">Add Client</p>
-        <form>
+        <form action="/client" method="POST">
+            @csrf
             <div class="grid gap-6 mb-6 lg:grid-cols-2">
                 <div>
                     <label
-                        for="first_name"
+                        for="name"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Full Name</label
                     >
                     <input
                         type="text"
-                        id="first_name"
+                        name="name"
+                        id="name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        value="{{old('name')}}"
                     />
+                    @error('name')
+                    <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="last_name"
+                        for="email"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Email Id</label
                     >
                     <input
-                        type="text"
-                        id="last_name"
+                        type="email"
+                        id="email"
+                        name="email"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Doe"
+                        placeholder=""
                         required
+                        value="{{old('email')}}"
                     />
+                    @error('email')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="phone"
+                        for="number"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Phone number</label
                     >
                     <input
                         type="tel"
-                        id="phone"
+                        name="number"
+                        id="number"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="123-45-678"
-                        pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                         required
+                        value="{{old('number')}}"
                     />
+                    @error('number')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="website"
+                        for="aadhar_number"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Aaddhar Number</label
                     >
                     <input
-                        type="url"
-                        id="website"
+                        type="text"
+                        id="aadhar_number"
+                        name="aadhar_number"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="flowbite.com"
+                        placeholder=""
                         required
+                        value="{{old('aadhar_number')}}"
                     />
+                    @error('aadhar_number')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="visitors"
+                        for="business_name"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Business Name</label
                     >
                     <input
                         type="text"
-                        id="visitors"
+                        id="business_name"
+                        name="business_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        value="{{old('business_name')}}"
                     />
+                    @error('business_name')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
             </div>
             <div class="mb-6">
                 <label
-                    for="email"
+                    for="address"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >Address</label
                 >
                 <textarea
-                    id="email"
+                    id="address"
+                    name="address"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder=""
                     required
-                ></textarea>
+                >{{old('address')}}</textarea>
+                @error('address')
+                    <p class="text-sm text-red-600">{{$message}}</p>
+                @enderror
             </div>
             <div class="grid gap-6 mb-6 lg:grid-cols-2">
                 <div>
                     <label
-                        for="visitors"
+                        for="pincode"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Pincode</label
                     >
                     <input
                         type="text"
-                        id="visitors"
+                        id="pincode"
+                        name="pincode"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        value="{{old('pincode')}}"
                     />
+                    @error('pincode')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="visitors"
+                        for="gst"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >GST No.</label
                     >
                     <input
                         type="text"
-                        id="visitors"
+                        id="gst_no"
+                        name="gst_no"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
+                        value="{{old('gst_no')}}"
                         required
                     />
+                    @error('gst_no')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="visitors"
+                        for="team_size"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Team Size</label
                     >
                     <input
-                        type="text"
-                        id="visitors"
+                        type="number"
+                        id="team_size"
+                        name="team_size"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        value="{{old('team_size')}}"
                     />
+                    @error('team_size')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
             </div>
             <div class="mb-6">
                 <label
-                    for="email"
+                    for="requirements"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >Requirements</label
                 >
                 <textarea
-                    id="email"
+                    id="requirements"
+                    name="requirements"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder=""
                     required
-                ></textarea>
+                >{{old('requirements')}}</textarea>
+                @error('requirements')
+                    <p class="text-sm text-red-600">{{$message}}</p>
+                @enderror
             </div>
             <div class="mb-6">
                 <label
-                    for="email"
+                    for="notes"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >Notes</label
                 >
                 <textarea
-                    id="email"
+                    id="notes"
+                    name="notes"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder=""
                     required
-                ></textarea>
+                >{{old('notes')}}</textarea>
+                @error('notes')
+                    <p class="text-sm text-red-600">{{$message}}</p>
+                @enderror
             </div>
             <div class="grid gap-6 mb-6 lg:grid-cols-2">
                 <div>
                     <label
-                        for="visitors"
+                        for="client_code"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Client Code</label
                     >
                     <input
                         type="text"
-                        id="visitors"
+                        id="client_code"
+                        name="client_code"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        value="{{old('client_code')}}"
                     />
+                    @error('client_code')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="visitors"
+                        for="lead_source"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Lead Source</label
                     >
                     <input
                         type="text"
-                        id="visitors"
+                        id="lead_source"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        name="lead_source"
                         placeholder=""
                         required
+                        value="{{old('lead_source')}}"
                     />
+                    @error('lead_source')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="visitors"
+                        for="sales_person"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Sales Person</label
                     >
                     <input
                         type="text"
-                        id="visitors"
+                        id="sales_person"
+                        name="sales_person"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        value="{{old('sales_person')}}"
                     />
+                    @error('sales_person')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="visitors"
+                        for="manager"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Manager</label
                     >
                     <input
                         type="text"
-                        id="visitors"
+                        id="manager"
+                        name="manager"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        name="{{old('manager')}}"
                     />
+                    @error('manager')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="visitors"
+                        for="technical_person"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Technical Person</label
                     >
                     <input
                         type="text"
-                        id="visitors"
+                        id="technical_person"
+                        name="technical_person"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        value="{{old('technical_person')}}"
                     />
+                    @error('technical_person')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
                 <div>
                     <label
-                        for="visitors"
+                        for="date_of_start"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Date of Start</label
                     >
                     <input
-                        type="text"
-                        id="visitors"
+                        type="date"
+                        id="date_of_start"
+                        name="date_of_start"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
+                        value="{{old('date_of_start')}}"
                     />
+                    @error('date_of_start')
+                        <p class="text-sm text-red-600">{{$message}}</p>
+                    @enderror
                 </div>
             </div>
             <button
