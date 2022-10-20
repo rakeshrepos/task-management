@@ -8,7 +8,8 @@ export default {
         return{
             clients: [],
             client: '',
-            task: ''
+            task: '',
+            show: false
         }
     },
     mounted(){
@@ -29,6 +30,9 @@ export default {
             }).then(response=>{
                 console.log(response.data);
             })
+            this.task = ''
+            this.otp = ''
+            this.show = true
             console.log(this.task)
             console.log(this.client)
         }
@@ -53,6 +57,7 @@ export default {
                 </button>
             </div>
         </div>
+        <p v-if="show" class="w-full flex justify-center text-green-700">Task Created Successfulyy!!!</p>
     </div>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>

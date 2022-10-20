@@ -8,7 +8,7 @@ export default defineConfig({
             input: [
                 // 'resources/sass/app.scss',
                 'resources/css/app.css',
-                'resources/js/toggle.js',
+                'resources/css/table.css',
                 'resources/js/app.js',
             ],
             refresh: true,

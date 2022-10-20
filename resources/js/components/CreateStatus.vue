@@ -7,28 +7,48 @@ export default {
     data(){
         return{
             clients: [],
+            tasks: [],
             client: '',
-            status: ''
+            task: '',
+            status: '',
+            show: false
         }
     },
     mounted(){
-        this.fetClients()
+        this.fetchClients()
+    },
+    watch:{
+        client(val){
+            this.fetchTasks();
+            console.log(val);
+        }
     },
     methods:{
-        fetClients(){
+        fetchClients(){
             axios.get("/api/clients").then((response) => {
                 this.clients = response.data;
                 console.log(this.clients);
             }); 
         },
+        fetchTasks(){
+            if(this.client){
+                console.log('asf'+this.client)
+                axios.get("/api/tasks/"+this.client).then((response) => {
+                    this.tasks = response.data;
+                    console.log(this.tasks);
+                }); 
+            }
+        },
         addStatus(){
             axios({
                 url: '/status',
-                data: {client_code:this.client,status:this.status},
+                data: {task_id:this.task,status:this.status},
                 method: 'POST'
             }).then(response=>{
                 console.log(response.data);
             })
+            this.status = '';
+            this.show = true
             console.log(this.status)
             console.log(this.client)
         }
@@ -39,6 +59,7 @@ export default {
     <div>
         <div class="w-full flex justify-start">
             <multiselect placeholder="Select Caller" v-model="client" :options="clients" :searchable="true"></multiselect>
+            <multiselect placeholder="Select Task" v-model="task" :options="tasks" :searchable="true"></multiselect>
         </div>
 
         <div class="mt-10 mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
@@ -52,6 +73,7 @@ export default {
                 </button>
             </div>
         </div>
+        <p v-if="show" class="w-full flex justify-center text-green-700">Status Created Successfulyy!!!</p>
     </div>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>

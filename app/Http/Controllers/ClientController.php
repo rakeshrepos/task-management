@@ -33,6 +33,7 @@ class ClientController extends Controller
             'number' => ['required','numeric','unique:clients'],
             'aadhar_number' => ['required','numeric','min:12','unique:clients'],
             'business_name' => ['required','string'],
+            'otp' => ['required'],
             'address' => ['required'],
             'pincode' => ['required','numeric'],
             'team_size' => ['required','numeric'],
@@ -47,7 +48,7 @@ class ClientController extends Controller
         ]); 
 
         if($validation->fails()){
-            return view('createClient')->withInput($data)->withErrors($validation);
+            return redirect()->back()->withInput()->withErrors($validation);
         }   
         // dd($data);
         $client = Client::create($data);
@@ -56,13 +57,14 @@ class ClientController extends Controller
 
     public function show($id){
         $client = Client::FindOrFail($id)->first();
-        $status = Status::where('client_code','=',$client->client_code)->get();
-        $task = Task::where('client_code','=',$client->client_code)->get();
-        // dd($status,$task);
+        $tasks = Task::where('client_code','=',$client->client_code)->orderBy('created_at', 'DESC')->get();
+        foreach($tasks as $task){
+            $status = Status::where('task_id','=',$task->id)->get();
+            $task->status = $status;
+        }
         return view('showClient',[
             'client' => $client,
-            'status' => $status,
-            'task' => $task
+            'tasks' => $tasks
         ]);
     }
 }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('pincode');
             $table->string('aadhar_number');
             $table->string('business_name');
+            $table->string('otp');
             $table->string('gst_no');
             $table->string('team_size');
             $table->string('requirements');

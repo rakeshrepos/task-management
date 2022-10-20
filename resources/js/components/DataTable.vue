@@ -26,12 +26,14 @@ export default {
         <td>Email</td>
         <td>Number</td>
         <td>Client Code</td>
+        <td>OTP</td>
         <td>Action</td>
       </tr>
       <tr v-for="client in clients" :key="client.id">
         <td>{{ client.name }}</td>
         <td>{{ client.email }}</td>
         <td>{{ client.number }}</td>
+        <td>{{ client.otp }}</td>
         <td>{{ client.client_code }}</td>
         <td>
           <a

@@ -19,3 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('clients', [App\Http\Controllers\API::class, 'fetchClients']);
+Route::get('tasks/{id}', [App\Http\Controllers\API::class, 'fetchTasks']);
+Route::post('verifyClient', [App\Http\Controllers\API::class, 'verifyClient']);
+Route::post('verifyOtp', [App\Http\Controllers\API::class, 'verifyOtp']);
+Route::post('fetchStatus', [App\Http\Controllers\API::class, 'fetchStatus']);

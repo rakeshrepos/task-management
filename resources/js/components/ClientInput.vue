@@ -2,10 +2,71 @@
 export default {
     data(){
         return{
-            client_id:"",
+            client_code:"",
+            clinet: "",
             task_id:"",
             otp:"",
-            show: false
+            show: false,
+            error: '',
+            status: [],
+            task: '',
+        }
+    },
+    methods:{
+        verifyClient(){
+            axios({
+                url: '/api/verifyClient',
+                data: {client_code:this.client_code,task_id:this.task_id},
+                method: 'POST'
+            }).then(response=>{
+                this.task = response.data.id;
+                console.log(this.task)
+                if(this.task === undefined){
+                    this.error = 'Invalid Credentials'
+                    this.show = false
+                }
+                else{
+                    this.show = true 
+                    this.error = ''
+                }
+            })
+        },
+        verifyOtp(){
+            axios({
+                url: '/api/verifyOtp',
+                data: {client_code:this.client_code,otp:this.otp},
+                method: 'POST'
+            }).then(response=>{
+                this.client = response.data;
+                console.log(typeof this.client)
+                if(typeof this.client === 'string'){
+                    if(this.client.trim().length === 0){
+                        console.log('asdf')
+                        this.error = "Invalid OTP"
+                        this.show = false
+                    }
+                    else{
+                        console.log('asdfs')
+                        this.show = false 
+                        this.error = ''
+                    }
+                }
+
+                if(typeof this.client === 'object'){
+                    this.fetchStatus()
+                }
+            })
+        },
+        fetchStatus(){
+            axios({
+                url: '/api/fetchStatus',
+                data: {task_id:this.task_id},
+                method: 'POST'
+            }).then(response=>{
+                this.status = response.data;
+                console.log(this.status)
+                this.show = false
+            }) 
         }
     }
 }
@@ -33,6 +94,7 @@ export default {
                             <input
                         type="text"
                         id="visitors"
+                        v-model="otp"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
                         required
@@ -40,26 +102,65 @@ export default {
                         </div>
                         <!-- Modal footer -->
                         <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Verify</button>
+                            <button @click="verifyOtp" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Verify</button>
                             <button @click="show=false" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-6 justify-center items-center h-screen w-screen">
+        <div class="w-screen px-3 py-2 shadow-md">
+            <img src="https://www.b2bresolute.com/wp-content/uploads/2020/12/logo-resize.png" class="h-10" alt="Resolute Logo">
+        </div>
+        <div class="w-screen flex flex-col gap-6 justify-center items-center mt-10">
             <p class="text-xl font-bold">Enter You Details Here:</p>
-            <div class="flex justify-center gap-5 w-full">
+            <p class="text-red-600">{{error}}</p>
+            <div class="flex flex-col items-center lg:flex-row lg:justify-center gap-5 w-full">
                 <div class="flex w-[20rem] gap-2 items-center">
                     <p class="w-[6rem]">Client Id:</p>
-                    <input type="text" placeholder="Enter Your Id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                    <input type="text" v-model="client_code" placeholder="Enter Your Id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                 </div>
                 <div class="flex w-[20rem] gap-2 items-center">
                     <p class="w-[5rem]">Task Id:</p>
-                    <input type="text" placeholder="Enter Task Id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                    <input type="text" v-model="task_id" placeholder="Enter Task Id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                 </div>
             </div>
-            <button @click="show=true" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button @click="verifyClient" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        </div>
+
+        <div class="lg:px-[7rem]">
+            <!-- timline -->
+            <div class=" py-6 flex flex-col justify-center sm:py-12">
+                <div class="py-3 sm:mx-auto w-full px-2 sm:px-0">
+    
+                    <div class="relative antialiased text-sm font-semibold">
+    
+                        <!-- Vertical bar running through middle -->
+                        <div class="hidden sm:block w-1 bg-blue-300 absolute h-full left-1/2 transform -translate-x-1/2"></div>
+                        <!-- @foreach($notes as $note) -->
+                        <div v-for="(item,index) in status" :key="index" class="mt-6 sm:mt-0 sm:mb-12">
+                            <div class="flex flex-col sm:flex-row items-center">
+                                <div :class="`${index%2==0? 'justify-start':'justify-end'} flex w-full mx-auto items-center`">
+                                    <div class="w-full sm:w-1/2 sm:pr-8">
+                                        <!-- <p class="ml-2">2022-10-03 07:12:44</p> -->
+                                        <div class="p-6 bg-white rounded shadow-xl">
+                                            {{item.status}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <p :class="`${index%2==0? 'w-[20%] sm:w-[60%] lg:w-[60%]':'w-[20%] sm:w-[40%] lg:w-[45%]'} ml-2 absolute flex justify-end`">{{item.created_at.substring(0,10)}}</p>
+                                <div class="rounded-full hidden lg:flex bg-blue-500 border-white border-4 w-8 h-8 absolute left-1/2 -translate-y-4 sm:translate-y-0 transform -translate-x-1/2 items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @endforeach -->
+                    </div>
+                </div>
+            </div>
+            <!-- endtimeline -->
         </div>
     </div>
 </template>
