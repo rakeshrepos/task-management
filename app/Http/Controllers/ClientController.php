@@ -63,8 +63,19 @@ class ClientController extends Controller
     }
 
     public function show($id){
-        $client = Client::FindOrFail($id)->first();
-        $tasks = Task::where('client_code','=',$client->client_code)->orderBy('created_at', 'DESC')->get();
+        if(Auth::user()->role=='admin'){
+            $client = Client::FindOrFail($id)->first();
+            $tasks = Task::where('client_code','=',$client->client_code)->orderBy('created_at', 'DESC')->get();
+        }else{
+            $client = Client::FindOrFail($id)->first();
+            $user_id = Auth::user()->id;
+            $executive_client_tasks_id = ExecutiveClientTasks::select('task_id')->where('client_code','=',$client->client_code)->where('executive','=',$user_id)->get();
+            if($executive_client_tasks_id != null){
+                $tasks = Task::whereIn('id',$executive_client_tasks_id)->get();
+            }else{
+                return 'not an authorized user';
+            }
+        }
         foreach($tasks as $task){
             $status = Status::where('task_id','=',$task->id)->orderBy('id','DESC')->get();
             $task->status = $status;

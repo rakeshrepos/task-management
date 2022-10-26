@@ -16,7 +16,7 @@ export default {
     getClients(page=1) {
       axios.get("/client?page="+page).then((response) => {
         this.clients = response.data;
-        console.log(response.data.data);
+        console.log(response);
       });
     },
   },
