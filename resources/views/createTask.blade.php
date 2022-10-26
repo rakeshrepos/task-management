@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="px-4">
-   <create-task></create-task>
+   <create-task id="{{Auth::user()->id}}"></create-task>
 </div>
 @endsection

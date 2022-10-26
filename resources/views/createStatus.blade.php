@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="px-4">
-   <create-Status></create-Status>
+   <create-Status id="{{Auth::user()->id}}"></create-Status>
 </div>
 @endsection

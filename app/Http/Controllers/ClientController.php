@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Client;
 use App\Models\Status;
 use App\Models\Task;
-
+use App\Models\ExecutiveClientTasks;
+use Auth;
 class ClientController extends Controller
 {
     //
@@ -18,7 +19,13 @@ class ClientController extends Controller
     }
 
     public function index(){
-        return Client::orderBy('id','DESC')->paginate();
+        if(Auth::user()->role=='admin'){
+            return Client::orderBy('id','DESC')->paginate();
+        }else{
+            $user_id = Auth::user()->id;
+            $clients_code = ExecutiveClientTasks::select('client_code')->where('executive','=',$user_id)->get();
+            return Client::whereIn('client_code',$clients_code)->orderBy('id','DESC')->paginate();
+        }
     }
     
     public function create(){
@@ -52,7 +59,7 @@ class ClientController extends Controller
         }   
         // dd($data);
         $client = Client::create($data);
-        return redirect('/admin');
+        return redirect('/home');
     }
 
     public function show($id){

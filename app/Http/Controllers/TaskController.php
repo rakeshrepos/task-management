@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
-
+use App\Models\ExecutiveClientTasks;
 class TaskController extends Controller
 {
     //
@@ -18,6 +18,17 @@ class TaskController extends Controller
     }
 
     public function store(Request $request){
-        return Task::create($request->all());
+        $data = $request->all();
+        $task = Task::create([
+            'client_code' => $data['client_code'],
+            'task' => $data['task'],
+            ]
+        );
+
+        return ExecutiveClientTasks::create([
+            'executive' => $data['executive'],
+            'client_code' => $data['client_code'],
+            'task_id' => $task->id
+        ]);
     }
 }

@@ -33,6 +33,7 @@ app.component('create-status',CreateStatus);
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+
 // Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
 //     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
 // });
@@ -44,3 +45,4 @@ app.component('create-status',CreateStatus);
  */
 
 app.mount('#app');
+

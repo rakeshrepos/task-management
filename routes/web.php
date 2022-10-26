@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.index');
 
 Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->withoutMiddleware(['auth'])->name('client.index');
 Route::get('/client/create', [App\Http\Controllers\ClientController::class, 'create'])->name('client.create');
@@ -34,3 +34,8 @@ Route::post('/status', [App\Http\Controllers\StatusController::class, 'store'])-
 
 Route::get('/executive', [App\Http\Controllers\ExecutiveController::class, 'index'])->name('executive.index');
 Route::get('/executive/create', [App\Http\Controllers\ExecutiveController::class, 'create'])->name('executive.create');
+Route::post('/executive', [App\Http\Controllers\ExecutiveController::class, 'store'])->name('executive.store');
+
+
+Route::get('/password/edit', [App\Http\Controllers\Password::class, 'edit'])->name('updatePassword.edit');
+Route::post('/password/edit', [App\Http\Controllers\Password::class, 'update'])->name('updatePassword.update');

@@ -1,31 +1,41 @@
 <script>
 import Multiselect from '@vueform/multiselect'
 export default {
+    props:['id'],
     components: {
         Multiselect
     },
     data(){
         return{
             clients: [],
+            executives: [],
             client: '',
+            executive: '',
             task: '',
             show: false
         }
     },
     mounted(){
-        this.fetClients()
+        this.fetchClients(),
+        this.fetchExecutives()
     },
     methods:{
-        fetClients(){
-            axios.get("/api/clients").then((response) => {
+        fetchClients(){
+            axios.get("/api/clients/"+this.id).then((response) => {
                 this.clients = response.data;
                 console.log(this.clients);
+            }); 
+        },
+        fetchExecutives(){
+            axios.get("/api/executives").then((response) => {
+                this.executives = response.data;
+                console.log(this.executives);
             }); 
         },
         addTask(){
             axios({
                 url: '/task',
-                data: {client_code:this.client,task:this.task},
+                data: {client_code:this.client,task:this.task,executive:this.executive},
                 method: 'POST'
             }).then(response=>{
                 console.log(response.data);
@@ -43,6 +53,7 @@ export default {
     <div>
         <div class="w-full flex justify-start">
             <multiselect placeholder="Select Caller" v-model="client" :options="clients" :searchable="true"></multiselect>
+            <multiselect placeholder="Select Executive" v-model="executive" :options="executives" :searchable="true"></multiselect>
         </div>
 
 

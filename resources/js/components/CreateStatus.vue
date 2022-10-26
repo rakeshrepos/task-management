@@ -1,6 +1,7 @@
 <script>
 import Multiselect from '@vueform/multiselect'
 export default {
+    props: ['id'],
     components: {
         Multiselect
     },
@@ -15,7 +16,8 @@ export default {
         }
     },
     mounted(){
-        this.fetchClients()
+        this.fetchClients(),
+        console.log(this.id)
     },
     watch:{
         client(val){
@@ -25,15 +27,14 @@ export default {
     },
     methods:{
         fetchClients(){
-            axios.get("/api/clients").then((response) => {
+            axios.get("/api/clients/"+this.id).then((response) => {
                 this.clients = response.data;
                 console.log(this.clients);
             }); 
         },
         fetchTasks(){
             if(this.client){
-                console.log('asf'+this.client)
-                axios.get("/api/tasks/"+this.client).then((response) => {
+                axios.get("/api/tasks/"+this.client+"/"+this.id).then((response) => {
                     this.tasks = response.data;
                     console.log(this.tasks);
                 }); 
@@ -58,7 +59,7 @@ export default {
 <template>
     <div>
         <div class="w-full flex justify-start">
-            <multiselect placeholder="Select Caller" v-model="client" :options="clients" :searchable="true"></multiselect>
+            <multiselect placeholder="Select client" v-model="client" :options="clients" :searchable="true"></multiselect>
             <multiselect placeholder="Select Task" v-model="task" :options="tasks" :searchable="true"></multiselect>
         </div>
 
