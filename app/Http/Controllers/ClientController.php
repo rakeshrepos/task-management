@@ -18,7 +18,7 @@ class ClientController extends Controller
     }
 
     public function index(){
-        return Client::all();
+        return Client::orderBy('id','DESC')->paginate();
     }
     
     public function create(){
@@ -59,7 +59,7 @@ class ClientController extends Controller
         $client = Client::FindOrFail($id)->first();
         $tasks = Task::where('client_code','=',$client->client_code)->orderBy('created_at', 'DESC')->get();
         foreach($tasks as $task){
-            $status = Status::where('task_id','=',$task->id)->get();
+            $status = Status::where('task_id','=',$task->id)->orderBy('id','DESC')->get();
             $task->status = $status;
         }
         return view('showClient',[

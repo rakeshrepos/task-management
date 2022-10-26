@@ -6,7 +6,6 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
-
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -24,6 +23,7 @@ app.component('client-input',ClientInput);
 app.component('data-table',DataTable);
 app.component('create-task',CreateTask);
 app.component('create-status',CreateStatus);
+
 
 /**
  * The following block of code may be used to automatically register your

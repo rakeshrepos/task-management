@@ -1,5 +1,9 @@
 <script>
+import LaravelVuePagination from 'laravel-vue-pagination';
 export default {
+  components: {
+    'Pagination': LaravelVuePagination
+    },
   data() {
     return {
       clients: {},
@@ -9,10 +13,10 @@ export default {
     this.getClients();
   },
   methods: {
-    getClients() {
-      axios.get("/client").then((response) => {
+    getClients(page=1) {
+      axios.get("/client?page="+page).then((response) => {
         this.clients = response.data;
-        console.log(this.clients);
+        console.log(response.data.data);
       });
     },
   },
@@ -29,7 +33,7 @@ export default {
         <td>OTP</td>
         <td>Action</td>
       </tr>
-      <tr v-for="client in clients" :key="client.id">
+      <tr v-for="client in clients.data" :key="client.id">
         <td>{{ client.name }}</td>
         <td>{{ client.email }}</td>
         <td>{{ client.number }}</td>
@@ -61,5 +65,7 @@ export default {
         </td>
       </tr>
     </table>
+
+    <Pagination :data="clients" @pagination-change-page="getClients"></Pagination>
   </div>
 </template>

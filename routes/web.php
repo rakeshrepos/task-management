@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('home');
+Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
 
-Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('client.index');
+Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->withoutMiddleware(['auth'])->name('client.index');
 Route::get('/client/create', [App\Http\Controllers\ClientController::class, 'create'])->name('client.create');
 Route::post('/client', [App\Http\Controllers\ClientController::class, 'store'])->name('client.store');
 Route::get('/client/{id}',[App\Http\Controllers\ClientController::class, 'show'])->name('client.show')->withoutMiddleware(['auth']);
@@ -31,3 +31,6 @@ Route::post('/task', [App\Http\Controllers\TaskController::class, 'store'])->nam
 
 Route::get('/status/create', [App\Http\Controllers\StatusController::class, 'create'])->name('status.create');
 Route::post('/status', [App\Http\Controllers\StatusController::class, 'store'])->name('status.store');
+
+Route::get('/executive', [App\Http\Controllers\ExecutiveController::class, 'index'])->name('executive.index');
+Route::get('/executive/create', [App\Http\Controllers\ExecutiveController::class, 'create'])->name('executive.create');
