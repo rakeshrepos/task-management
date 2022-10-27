@@ -64,8 +64,10 @@ class ClientController extends Controller
 
     public function show($id){
         if(Auth::user()->role=='admin'){
-            $client = Client::FindOrFail($id)->first();
+            $client = Client::where('id','=',$id)->first();
+            // return $client;
             $tasks = Task::where('client_code','=',$client->client_code)->orderBy('created_at', 'DESC')->get();
+            // return $tasks;
         }else{
             $client = Client::FindOrFail($id)->first();
             $user_id = Auth::user()->id;
