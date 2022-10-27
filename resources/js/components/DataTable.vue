@@ -37,8 +37,8 @@ export default {
         <td>{{ client.name }}</td>
         <td>{{ client.email }}</td>
         <td>{{ client.number }}</td>
-        <td>{{ client.otp }}</td>
         <td>{{ client.client_code }}</td>
+        <td>{{ client.otp }}</td>
         <td>
           <a
             :href="'/client/' + client.id"
