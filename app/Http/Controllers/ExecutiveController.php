@@ -42,6 +42,6 @@ class ExecutiveController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        return $user;
+        return redirect('/executive');
     }
 }
